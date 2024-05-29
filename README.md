@@ -29,91 +29,137 @@ Over time, numerous variations of the MNIST dataset have been created to challen
 
 #### Extract and normalize image data
 FUNCTION extract_data(filename, num)
+
     READ and process image data from gzip file
+
     RETURN normalized data
 
 #### Extract labels from a file
 FUNCTION extract_labels(filename, num)
+
     READ and process labels from gzip file
+
     RETURN labels
 
 #### Apply random rotations to images in parallel
 FUNCTION apply_random_rotations(images)
+
     APPLY rotation to images using multiple CPUs
+
     RETURN rotated images
 
 #### Apply challenging transformations to images in parallel
 FUNCTION apply_challenging_transformations_parallel(images)
+
     APPLY complex transformations using multiple CPUs
+
     RETURN transformed images
 
 #### Prepare MNIST data by extracting, processing, and saving
 FUNCTION prepare_MNIST_data()
+
     EXTRACT training and testing data and labels
+
     APPLY random rotations to training and testing images
+
     CREATE challenge dataset with additional transformations
+
     SPLIT training data into training and validation sets
+
     SAVE processed data
 
 ### Pseudocode for main script
 
 #### Load the data from a file
 FUNCTION load_data(filepath)
+
     LOAD data from npz file
+
     RETURN X_train, y_train, X_dev, y_dev, X_test, y_test, X_challenge, y_challenge
 
 #### Define the CNN model architecture
 FUNCTION create_cnn_model(input_shape, num_classes)
+
     CREATE Sequential model with layers:
+
         - Conv2D, BatchNormalization, MaxPooling2D, Dropout
+
         - Conv2D, BatchNormalization, MaxPooling2D, Dropout
+
         - Conv2D, BatchNormalization, MaxPooling2D, Dropout
+
         - Flatten, Dense, BatchNormalization, Dropout
+
         - Dense (output layer)
+
     RETURN model
 
 #### Display sample images and their predictions
 FUNCTION display_sample_images(images, labels, predictions, sample_size, correct)
+
     DISPLAY sample images with true and predicted labels
 
 #### Main function to load data, create model, train, evaluate, and save model
 FUNCTION main(args)
+
     LOAD data
+
     SET input shape and number of classes
+
     CREATE and compile the CNN model
+
     CONVERT data to TensorFlow datasets
+
     TRAIN the model with training and validation datasets
+
     EVALUATE the model on test and challenge datasets
+
     PREDICT on the test dataset
+
     DISPLAY correctly and incorrectly classified images
+
     SAVE the trained model
 
 
 ## Visualization or animation of algorithm steps or results
 
 Extracting Distributed_Data/Algorithms_Project/RotNIST/data/train-images-idx3-ubyte.gz
+
 Extracting Distributed_Data/Algorithms_Project/RotNIST/data/train-labels-idx1-ubyte.gz
+
 Extracting Distributed_Data/Algorithms_Project/RotNIST/data/t10k-images-idx3-ubyte.gz
+
 Extracting Distributed_Data/Algorithms_Project/RotNIST/data/t10k-labels-idx1-ubyte.gz
+
 Using 10 CPUs on Darwin 23.5.0
 
 Process ID: 42568 is processing an image
+
 Process ID: 42579 is processing an image
+
 Process ID: 42580 is processing an image
+
 Process ID: 42585 is processing an image
 
 Process ID: 42579 is processing a challenge image
+
 Process ID: 42580 is processing a challenge image
+
 Process ID: 42582 is processing a challenge image
+
 Process ID: 42576 is processing a challenge image
 
 ## Benchmark Results
 Over the versions in which I applied parallelization to the preprocessing and where I did not, these are the average time differences which parallelization saved:
 
 2.180572032928467 seconds
+
 2.383368968963623 seconds
+
 2.339139699935913 seconds
+
 2.054847240447998 seconds
+
 2.293233871459961 seconds
 
 Granted, these results were pulled from the rotation of only 10000 images. Since these rotations are random, duplicate initial images could be used to create multiple copies of the same handwritten numbers with different rotations and noise. While the process only saves ~2.2 seconds over a non-parallel method, over a larger training set this number can see drastic increases. 
@@ -129,12 +175,19 @@ Additionally, I have had zero exposure to a lot of the coding proficiencies requ
 ## Unit-testing strategy
 
 In preprocessing:
+
 Test the extract_data function to ensure it correctly extracts image data from gzip files.
+
 Test the extract_labels function to ensure it correctly extracts label data from gzip files.
+
 Test the apply_rotation function to ensure it correctly applies random rotations to images.
 
 In CNN:
+
 Test the data loading function to ensure it correctly loads and processes the dataset.
+
 Test the CNN model creation to ensure it is correctly configured.
+
 Test the training process of the CNN model with a small subset of data.
+
 Test the prediction capability of the CNN model with a small subset of data.
