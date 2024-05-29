@@ -1,0 +1,14 @@
+gzip
+os
+numpy 
+scipy 
+sklearn.model_selection 
+multiprocessing 
+platform
+time
+argparse
+tensorflow 
+tensorflow.keras.models 
+tensorflow.keras.layers 
+tensorflow.keras.optimizers 
+matplotlib.pyplot 
